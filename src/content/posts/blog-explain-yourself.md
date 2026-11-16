@@ -115,6 +115,95 @@ def symplectic_euler(q0, p0, dt, steps, grad_v):
     return q, p
 ```
 
+### Executable Interactive Scripting & CI Verification
+
+Because Astro natively supports client-side `<script>` tags and `.mdx` components, posts aren't restricted to static code blocks. I can embed direct, executable JavaScript snippets to drive interactive physics toys, parameter sliders, or client-side visualizers:
+
+```html
+<div id="integrator-demo" class="border-skin-line rounded border p-4">
+  <button
+    id="step-btn"
+    class="bg-skin-accent text-skin-inverted rounded px-3 py-1"
+  >
+    Step Integrator
+  </button>
+  <span id="output" class="ml-3 font-mono">q: 1.000, p: 0.000</span>
+</div>
+
+<script>
+  let q = 1.0,
+    p = 0.0,
+    dt = 0.05;
+  document.getElementById("step-btn")?.addEventListener("click", () => {
+    p -= dt * Math.sin(q);
+    q += dt * p;
+    const out = document.getElementById("output");
+    if (out) out.textContent = `q: ${q.toFixed(3)}, p: ${p.toFixed(3)}`;
+  });
+</script>
+```
+
+<div class="my-6 rounded-lg border border-skin-line p-4 bg-skin-card">
+  <div class="flex flex-wrap items-center gap-4">
+    <button
+      id="live-step-btn"
+      type="button"
+      class="rounded bg-skin-accent px-4 py-2 font-mono text-sm font-semibold text-skin-inverted transition hover:opacity-90 active:scale-95"
+    >
+      Step Integrator
+    </button>
+    <button
+      id="live-reset-btn"
+      type="button"
+      class="rounded border border-skin-line px-3 py-2 font-mono text-sm opacity-80 hover:opacity-100"
+    >
+      Reset
+    </button>
+    <span id="live-output" class="font-mono text-sm text-skin-accent">
+      q: 1.000, p: 0.000 | step: 0
+    </span>
+  </div>
+  <div class="mt-3 text-xs opacity-70 font-mono">
+    Euler-Cromer / semi-implicit step over dV/dq = sin(q)
+  </div>
+</div>
+
+<script>
+  (() => {
+    let q = 1.0;
+    let p = 0.0;
+    let step = 0;
+    const dt = 0.1;
+
+    const out = document.getElementById("live-output");
+    const stepBtn = document.getElementById("live-step-btn");
+    const resetBtn = document.getElementById("live-reset-btn");
+
+    stepBtn?.addEventListener("click", () => {
+      // Symplectic kick-drift step:
+      p -= dt * Math.sin(q);
+      q += dt * p;
+      step++;
+      if (out) {
+        out.textContent = `q: ${q.toFixed(3)}, p: ${p.toFixed(3)} | step: ${step}`;
+      }
+    });
+
+    resetBtn?.addEventListener("click", () => {
+      q = 1.0;
+      p = 0.0;
+      step = 0;
+      if (out) {
+        out.textContent = `q: ${q.toFixed(3)}, p: ${p.toFixed(3)} | step: 0`;
+      }
+    });
+  })();
+</script>
+
+Running embedded logic inside articles usually introduces the risk of client runtime crashes or unhandled DOM errors slipping into production.
+
+Because the deployment runs through GitHub Actions before reaching Cloudflare, every embedded script, AST node, and TypeScript type is evaluated by astro check and ESLint in the runner. If an embedded component has broken types, an unclosed tag, or an invalid dependency import, the CI pipeline halts and rejects the deployment before broken code ever reaches the CDN.
+
 ### Media & Reaction Assets
 
 Media files can be dropped directly alongside posts and referenced locally via standard Markdown tags:
