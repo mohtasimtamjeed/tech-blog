@@ -9,6 +9,8 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { rehypeHeadingIds, unified } from "@astrojs/markdown-remark";
 import rehypeCallouts from "rehype-callouts";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -40,12 +42,11 @@ export default defineConfig({
     },
   },
   markdown: {
-    // Deprecated: the theme no longer uses remark-toc or remark-collapse. They
-    // stay in package.json so a customised config importing them still builds,
-    // and are removed in v8.
     processor: unified({
+      remarkPlugins: [remarkMath],
       rehypePlugins: [
         rehypeHeadingIds,
+        rehypeKatex,
         rehypeInlineToc,
         rehypeCallouts,
         rehypeTableWrapper,
