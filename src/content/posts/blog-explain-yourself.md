@@ -14,7 +14,7 @@ tags:
 description: A technical manifest of the architecture, stack decisions, math engines, and CI/CD delivery pipeline powering this blog.
 ---
 
-Every engineering project should justify its existence and its architecture. 
+Every engineering project should justify its existence and its architecture.
 
 This site is not running on WordPress, Medium, or Substack. It is a compiled, edge-delivered static artifact designed to solve a specific problem: writing about physics, mathematics, and systems programming without wrestling with clunky WYSIWYG editors, broken equation parsers, or hosting bills.
 
@@ -70,19 +70,19 @@ The system treats prose like software: version-controlled, validated against sta
 
 ### Why Astro over Hugo or Substack?
 
-* **Build-Time Math:** Substack treats equations as an afterthought. Hugo executes client-side KaTeX scripts that cause a visible layout flash as the browser parses text. Astro compiles equations to pure HTML/MathML during build time. The reader's browser downloads zero client-side math libraries.
+- **Build-Time Math:** Substack treats equations as an afterthought. Hugo executes client-side KaTeX scripts that cause a visible layout flash as the browser parses text. Astro compiles equations to pure HTML/MathML during build time. The reader's browser downloads zero client-side math libraries.
 
-* **Component Extensibility (MDX):** If I want to embed an interactive canvas, a dynamic simulation slider, or WebAssembly (Pyodide) in a future post, Astro lets me drop a UI component straight into Markdown.
+- **Component Extensibility (MDX):** If I want to embed an interactive canvas, a dynamic simulation slider, or WebAssembly (Pyodide) in a future post, Astro lets me drop a UI component straight into Markdown.
 
 ### Why Markdown (`.md`)?
 
-* **Portability:** Markdown is plain text. If Cloudflare disappears tomorrow, or if I switch static site generators in five years, the raw content remains mine—unlocked from proprietary databases or proprietary CMS schemas.
+- **Portability:** Markdown is plain text. If Cloudflare disappears tomorrow, or if I switch static site generators in five years, the raw content remains mine—unlocked from proprietary databases or proprietary CMS schemas.
 
 ### Why GitHub Actions over Native Cloudflare Builds?
 
-* **Strict Quality Gates:** Instead of blindly deploying whatever is pushed, the CI runner validates post frontmatter schemas via `astro check` (catching missing tags, incorrect datetime formats, or invalid types) before anything reaches production.
-* **Decoupled Infrastructure:** The build environment is decoupled from the hosting layer. Cloudflare only receives dumb, compiled static artifacts (`.html`, `.css`, `.js`). If hosting ever shifts to AWS S3/CloudFront or a self-hosted Nginx container, the build logic and pipeline remain completely unchanged.
-* **Automated CI Audits:** Provides a clean integration surface to plug in automated link verification, markdown linting, or asset compression steps down the line.
+- **Strict Quality Gates:** Instead of blindly deploying whatever is pushed, the CI runner validates post frontmatter schemas via `astro check` (catching missing tags, incorrect datetime formats, or invalid types) before anything reaches production.
+- **Decoupled Infrastructure:** The build environment is decoupled from the hosting layer. Cloudflare only receives dumb, compiled static artifacts (`.html`, `.css`, `.js`). If hosting ever shifts to AWS S3/CloudFront or a self-hosted Nginx container, the build logic and pipeline remain completely unchanged.
+- **Automated CI Audits:** Provides a clean integration surface to plug in automated link verification, markdown linting, or asset compression steps down the line.
 
 ---
 
@@ -122,6 +122,7 @@ Media files can be dropped directly alongside posts and referenced locally via s
 ```markdown
 ![System Status](@/assets/images/dumpster_fire.gif)
 ```
+
 ![System Status](@/assets/images/dumpster_fire.gif)
 ---
 

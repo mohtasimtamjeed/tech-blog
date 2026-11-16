@@ -19,6 +19,6 @@ This space serves as a public repository of technical explorations, architectura
 
 ### Connect
 
-* **Code:** [GitHub](https://github.com/mohtasimtamjeed)
-* **Network:** [LinkedIn](https://linkedin.com/in/mohtasimtamjeed)
-* **Direct:** [Email](mailto:mohtasimtamjeed@gmail.com)
+- **Code:** [GitHub](https://github.com/mohtasimtamjeed)
+- **Network:** [LinkedIn](https://linkedin.com/in/mohtasimtamjeed)
+- **Direct:** [Email](mailto:mohtasimtamjeed@gmail.com)
